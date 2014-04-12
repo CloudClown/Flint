@@ -1,0 +1,17 @@
+{
+  "name": "Flint",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "node-sass": "*",
+    "twilio": "*",
+    "goinstant-auth": "*",
+    "goinstant-rest": "*",
+    "goinstant-assert": "*"
+  }
+}

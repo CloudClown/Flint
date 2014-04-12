@@ -2,5 +2,15 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='/css/normalize.css')
+    link(rel='stylesheet', href='/css/index.css')
+    block links
+    script(src='/js/jquery.js')
+    script(src='/js/angular.js')
+    script(src='/js/angularjs-geolocation.min.js')
+    script(src='https://cdn.goinstant.net/v1/platform.min.js')
+    script(src='https://cdn.goinstant.net/integrations/goangular/latest/goangular.min.js')
+    script(src='/js/chat.js')
+    block scripts
   body
     block content

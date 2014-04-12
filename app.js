@@ -38,7 +38,8 @@ if ('development' === app.get('env')) {
     app.locals.pretty = true;
 }
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
+app.get('/', routes.chat);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

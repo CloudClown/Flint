@@ -1,0 +1,32 @@
+extends layout
+
+block scripts 
+  script(src='/js/resize.js')
+
+block content
+  #messageApp(ng-app='Chat', ng-controller='ChatCtrl')
+    // Messages Displayed
+    #messageContainer
+      #messages
+        .message(ng-repeat='message in messages')
+          .rating(class="{{message.rating}}")
+            .plus(ng-click='message.rating="plus"')
+            .minus(ng-click='message.rating="minus"')
+          span.author {{ message.author }}:
+          span.content {{ message.content }}
+      // New Message Form
+      form(ng-submit='sendMessage()')
+        input(ng-model="messageContent")
+        button(type='submit') Send
+
+      .progress
+        .info
+      
+    aside.unlocks
+      .interest(ng-repeat='interest in intersts')
+        span.title {{ interest.title }}
+        .expand
+          ul(ng-repeat='item in interest')
+            li {{ item.name }}
+
+

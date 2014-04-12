@@ -6,13 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "*",
+    "express": "3.4.8",
     "jade": "*",
     "node-sass": "*",
     "twilio": "*",
     "goinstant-auth": "*",
     "goinstant-rest": "*",
-    "goinstant-assert": "*",
-    "request": "*"
+    "goinstant-assert": "*"
   }
 }

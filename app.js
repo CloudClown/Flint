@@ -2,12 +2,13 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var routes = require('./routes');
-var http = require('http');
-var path = require('path');
-var sass = require('node-sass');
-var app = express();
+ var express = require('express');
+ var routes = require('./routes');
+ var isaacloud = require('./routes/isaacloud');
+ var http = require('http');
+ var path = require('path');
+ var sass = require('node-sass');
+ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -23,23 +24,24 @@ app.use(express.session());
 app.use(app.router);
 
 app.use(
-        sass.middleware({
-            src: __dirname + '/public', //where the sass files are 
+  sass.middleware({
+            src: __dirname + '/public', //where the sass files are
             dest: __dirname + '/public', //where css should go
             debug: true // obvious
-        })
-       );
+          })
+  );
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' === app.get('env')) {
-    app.use(express.errorHandler());
-    app.locals.pretty = true;
+  app.use(express.errorHandler());
+  app.locals.pretty = true;
 }
 
 app.get('/', routes.index);
+app.get('/isaacloud', isaacloud.getLevel);
 
 http.createServer(app).listen(app.get('port'), function(){
-    console.log('Express server listening on port ' + app.get('port'));
+  console.log('Express server listening on port ' + app.get('port'));
 });

@@ -1,11 +1,13 @@
 extends layout
 
 block scripts 
+  script(src='/js/chat.js')
   script(src='/js/resize.js')
 
 block content
-  #messageApp(ng-app='Chat', ng-controller='ChatCtrl')
+  #messageApp(ng-controller='ChatCtrl')
     // Messages Displayed
+    aside.photos
     #messageContainer
       #messages
         .message(ng-repeat='message in messages')
@@ -23,10 +25,10 @@ block content
         .info
       
     aside.unlocks
-      .interest(ng-repeat='interest in intersts')
-        span.title {{ interest.title }}
-        .expand
-          ul(ng-repeat='item in interest')
-            li {{ item.name }}
+      .interest(ng-repeat='interest in interests')
+        div.title(slide-toggle=".expand_{{interest.$$hashKey}}") {{ interest.title }}
+        .slideable(class='expand_{{interest.$$hashKey}}', easing="eaes-in-out",duration=".40s")
+          ul(ng-repeat='item in interest.items')
+            li {{ item }}
 
 

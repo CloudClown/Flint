@@ -1,13 +1,37 @@
-var chatApp = angular.module('Chat', ['goangular']);
+var chatApp = angular.module('Chat', ['goangular', 'ngAnimate', 'angularSlideables']);
 
 chatApp.config(function($goConnectionProvider) {
   $goConnectionProvider.$set('https://goinstant.net/469216b0e2ee/Flint');
 });
-
+var test;
 chatApp.controller('ChatCtrl', function($scope, $goKey) {
   $scope.messages = $goKey('messages');
   $scope.messages.$sync();
 
+  $scope.interests = [
+    {
+      title: "TV Shows",
+      items: [
+        "Mad Men", 
+        "Game Of Thrones"
+      ]
+    },
+    {
+      title: "Music",
+      items: [
+        "Nirvana", 
+        "Miley Cyrus"
+      ]
+    },
+    {
+      title: "Languages",
+      items: [
+        "English", 
+        "Chinese"
+      ]
+    }
+  ];
+  
   // We can attach a listener to the 'ready' event
   // to be notified when our model is in sync
   $scope.messages.$on('ready', function() {
@@ -35,3 +59,4 @@ chatApp.controller('ChatCtrl', function($scope, $goKey) {
       });
   }
 });
+

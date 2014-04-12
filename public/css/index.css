@@ -14,7 +14,10 @@ button, input[type="submit"] {
   text-decoration: none;
   text-shadow: 0 1px 0 #1b509a;
   background-clip: padding-box;
-  font-size: 1em; }
+  -webkit-font-smoothing: antialiased;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1em; }
   button:hover:not(:disabled), input[type="submit"]:hover:not(:disabled) {
     box-shadow: inset 0 1px 0 0 #628dc8;
     cursor: pointer;
@@ -131,7 +134,7 @@ label {
   label abbr {
     display: none; }
 
-textarea, input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"] {
+textarea, input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"], select[multiple=multiple] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -146,14 +149,16 @@ textarea, input[type="email"], input[type="number"], input[type="password"], inp
   font-size: 1em;
   margin-bottom: 0.75em;
   padding: 0.5em 0.5em;
-  resize: vertical;
   width: 100%; }
-  textarea:hover, input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover {
+  textarea:hover, input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover, select[multiple=multiple]:hover {
     border-color: #c4c4c4; }
-  textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus {
+  textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, select[multiple=multiple]:focus {
     border-color: #477DCA;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);
     outline: none; }
+
+textarea {
+  resize: vertical; }
 
 input[type="search"] {
   -webkit-appearance: none;
@@ -171,6 +176,7 @@ input[type="file"] {
 
 select {
   width: auto;
+  max-width: 100%;
   margin-bottom: 1.5em; }
 
 button, input[type="submit"] {
@@ -217,38 +223,8 @@ dl {
   dl dd {
     margin: 0; }
 
-.error, #flash_failure {
-  background: #FBE3E4;
-  color: #96151c;
-  font-weight: bold;
-  margin-bottom: 0.75em;
-  padding: 0.75em; }
-  .error a, #flash_failure a {
-    color: #6a0f14; }
-    .error a:hover, #flash_failure a:hover {
-      color: #110203; }
 
-.notice, #flash_notice {
-  background: #FFF6BF;
-  color: #8c7700;
-  font-weight: bold;
-  margin-bottom: 0.75em;
-  padding: 0.75em; }
-  .notice a, #flash_notice a {
-    color: #594c00; }
-    .notice a:hover, #flash_notice a:hover {
-      color: black; }
 
-.success, #flash_success {
-  background: #E6EFC2;
-  color: #56651a;
-  font-weight: bold;
-  margin-bottom: 0.75em;
-  padding: 0.75em; }
-  .success a, #flash_success a {
-    color: #333c10; }
-    .success a:hover, #flash_success a:hover {
-      color: black; }
 
 * {
   -webkit-box-sizing: border-box;
@@ -258,7 +234,9 @@ dl {
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300);
 body {
   font-family: 'Roboto', sans-serif;
-  font-weight: 300; }
+  font-weight: 300;
+  background-image: url("/img/giftly.png"), -webkit-linear-gradient( #ffffff 0, yellow 50%, transparent 50%);
+  background-image: url("/img/giftly.png"), linear-gradient( #ffffff 0, yellow 50%, transparent 50%); }
 
 h1 {
   text-align: center; }
@@ -274,12 +252,22 @@ h1 {
   #messageApp:after {
     clear: both; }
 
+.photos {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 6.17215%;
+  border: 1px solid #333;
+  margin-right: 0; }
+  .photos:last-child {
+    margin-right: 0; }
+
 #messageContainer {
   float: left;
   display: block;
   margin-right: 2.35765%;
   width: 65.88078%;
-  margin-left: 8.5298%; }
+  margin-right: 0; }
   #messageContainer:last-child {
     margin-right: 0; }
 
@@ -288,7 +276,8 @@ h1 {
   display: block;
   margin-right: 2.35765%;
   width: 23.23176%;
-  border: 1px solid #333; }
+  border: 1px solid #333;
+  margin-right: 0; }
   .unlocks:last-child {
     margin-right: 0; }
 
@@ -297,7 +286,7 @@ h1 {
   overflow: auto; }
 
 .progress {
-  height: 100px;
+  height: 150px;
   border: 1px solid #333; }
 
 input {
@@ -339,3 +328,40 @@ button {
 
 .author {
   padding-right: 8px; }
+
+.interest .title {
+  margin: 5px;
+  font-size: 1.8em;
+  cursor: pointer; }
+.interest .slideable li {
+  margin: 0px 5px; }
+
+header {
+  *zoom: 1;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
+  height: 30px;
+  background-color: black;
+  color: white; }
+  header:before, header:after {
+    content: " ";
+    display: table; }
+  header:after {
+    clear: both; }
+  header .titleContainer {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 82.94039%; }
+    header .titleContainer:last-child {
+      margin-right: 0; }
+  header .title {
+    text-align: center; }
+  header .logout {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 6.17215%; }
+    header .logout:last-child {
+      margin-right: 0; }

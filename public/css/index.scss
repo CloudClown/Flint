@@ -7,6 +7,8 @@
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
+
+  @include background-image(url("/img/a.png"), linear-gradient(white 0, yellow 50%, transparent 50%));
 }
 
 h1 {
@@ -17,14 +19,21 @@ h1 {
   @include outer-container;
 }
 
+.photos {
+  @include span-columns(1);
+  border: 1px solid #333;
+  @include omega();
+}
+
 #messageContainer {
   @include span-columns(8);
-  @include shift(1);
+  @include omega();
 }
 
 .unlocks {
   @include span-columns(3);
   border: 1px solid #333;
+  @include omega();
 }
 
 #messages {
@@ -33,7 +42,7 @@ h1 {
 }
 
 .progress {
-  height: 100px;
+  height: 150px;
   border: 1px solid #333;
 }
 
@@ -84,3 +93,33 @@ button {
 .author {
   padding-right: 8px;
 }
+
+.interest {
+  .title {
+    margin: 5px;
+    font-size: 1.8em;
+    cursor: pointer;
+  }
+  .slideable {
+    li {
+      margin: 0px 5px;
+    }
+  }
+}
+
+header {
+  @include outer-container;
+  height: 30px;
+  background-color: black;
+  color: white;
+  .titleContainer {
+    @include span-columns(10);
+  }
+  .title {
+    text-align: center;
+  }
+  .logout {
+    @include span-columns(1);
+  }
+}
+

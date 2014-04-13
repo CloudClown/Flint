@@ -25,28 +25,24 @@ exports.initIsaacloud = function (req, res) {
       curl.request({
           method: "POST",
           url: "https://api.isaacloud.com/v1/admin/users",
-          data: JSON.stringify({"email": "ryanw"}),
+          data: JSON.stringify({"email": "asassa"}),
           headers: 
           {
             'Authorization': 'Bearer '+ accessToken,
             'Content-Type': 'application/json;UTF-8'
           }
         }, function (error, response, body) {
-   
-          if (response.message != "Constraint violation error" ){
-                console.log("User has already been created.");
-                res.json(-1);
-                console.log(response);
-            }
-            else if(JSON.parse(response).id != null) {
+        
+          if(JSON.parse(response).id) {
                 userID= JSON.parse(response).id;
-                console.log(userID);
+                console.log("userID " +userID);
                 res.json(userID);
-            }
-            else {
+          }
+          else {
                 console.log("Error");
                 console.log(response);
-            }
+                console.log(error);
+          }
         });
     });
 }

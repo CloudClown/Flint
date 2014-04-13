@@ -144,20 +144,17 @@ button {
 header {
   @include outer-container;
   height: 30px;
-  background-color: #FFF1C9;
+  background-color: #000000;
   color: #232323;
   font-size: 30px;
   padding-top: 3px;
   .titleContainer {
-    @include span-columns(4);
-    @include shift(6);
+
   }
   .title {
-    text-align: center;
-  }
-  .logout {
-    font-size: 24px;
-    @include span-columns(2);
+    position:relative;
+    left: 50%;
+    margin-top:-25px;
   }
 }
 

@@ -21,8 +21,8 @@ block content
       #messages
         .notification-bar 
           ul
-            li.slidein.notification(ng-repeat='notification in notifications | filter:live')
-             .text(ng-click='remove(notifications, $index)') {{ notification.text }}
+            li#alert(ng-repeat='notification in notifications')
+             .alert(ng-click='remove(notification, $index)') {{ notification.text }}
         .message(ng-repeat='message in messages')
           .rating(class="{{message.rating}}")
             .plus(ng-click='message.rating="plus"')

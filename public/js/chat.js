@@ -8,6 +8,8 @@ chatApp.controller('ChatCtrl', function($scope, $goKey) {
   $scope.messages = $goKey('messages');
   $scope.messages.$sync();
 
+  $scope.user = $goKey('accounts/')
+
   $scope.interests = [
     {
       title: "TV Shows",
@@ -34,12 +36,12 @@ chatApp.controller('ChatCtrl', function($scope, $goKey) {
 
   $scope.notifications = [
   {
-    text: "This is a sample notification",
-    live: true
+    text: "This is a sample notification"
   }
   ];
 
   $scope.remove = function(array, index){
+    console.log(remove);
     array.splice(index, 1);
   }
   

@@ -1,19 +1,24 @@
 extends layout
 
+block links
+  link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700', rel='stylesheet', type='text/css')
+  link(href="css/style.css" rel='stylesheet')
+
 block scripts
-  script(src='https://code.jquery.com/jquery-1.11.0.min.js')
-  script(src='https://cdn.firebase.com/js/client/1.0.11/firebase.js')
-  script(src='https://cdn.firebase.com/js/simple-login/1.3.2/firebase-simple-login.js')
-  script(src="https://cdn.goinstant.net/v1/platform.min.js")
+  script(src='js/view.js')
+  script(src='js/todo.js')
   div(id="fb-root")
-    script(src='/js/FBLogin.js')
+    script(src='js/FBLogin.js')
+  script(src='js/index.js')
 
 block content
-  h1= title
-  p Welcome to #{title}
-  button(id="FacebookLogin", data-action="bae").
-    Facebook Login
-  button(id="FacebookLogout", data-action="bae").
-    Facebook Logout
+  button#FacebookLogin(data-action="bae") Facebook Login
+  button#FacebookLogout(data-action="bae") Facebook Logout
 
+  a#buttonMatch.matchButton(href="#") Match
+  br
+  p#wait
+    .parentDiv
+
+  
   

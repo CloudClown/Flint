@@ -4,7 +4,8 @@
 
  var express = require('express');
  var routes = require('./routes');
- var isaacloud = require('./routes/isaacloud');
+ var getLevel = require('./routes/getLevel');
+ var initIsaacloud = require('./routes/initIsaacloud');
  var http = require('http');
  var path = require('path');
  var sass = require('node-sass');
@@ -40,7 +41,8 @@ if ('development' === app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/isaacloud', isaacloud.getLevel);
+app.get('/isaacloud/getLevel', getLevel.getLevel);
+app.post('/isaacloud/init', initIsaacloud.initIsaacloud);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

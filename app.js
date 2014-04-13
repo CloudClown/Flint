@@ -11,7 +11,7 @@ var path = require('path');
 var sass = require('node-sass');
 var app = express();
 
-var flintTwilio = require('./routes/flint-twilio');
+var flintTwilio = require('./routes/flintTwilio');
 
 // all environments
 app.set('port', process.env.PORT || 3000);

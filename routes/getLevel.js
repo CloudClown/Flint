@@ -101,7 +101,7 @@ exports.getLevel = function(req, res) {
           res.json(3);
         else if(ppoint > 10)
           res.json(2);
-        else if(ppoing > 1)
+        else if(ppoint > 1)
           res.json(1);
       }
       else {

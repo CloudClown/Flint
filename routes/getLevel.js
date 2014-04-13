@@ -128,31 +128,72 @@ exports.updatePoints = function(req, res) {
     if(!error) {
         accessToken = JSON.parse(response).access_token;
         console.log(accessToken);
-    } 
-    else {
-      console.log("Error");
-    }
-
-    if(!userID) userID = 52;
-    if(!newPoints) newPoints = 1;
-    if(!roomID) roomID = 1;
-    var roomID_str = roomID.toString();
-    var newPoints_str = newPoints.toString();
-    curl.request({
-      method: 'PUT',
-      url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customFields',
-      data: JSON.stringify({customFields:{ roomID_str: newPoints_str }}),
-      headers: 
-      {
-        'Authorization': 'Bearer '+ accessToken
-      }
-    }, function (error, response, body) {
-      if (!error) {
-        console.log("error");
-        console.log(response);
-       }
-    });
-
+        if(!userID) userID = 54;
+        if(!newPoints) newPoints = 1;
+        if(!roomID) roomID = 26;
+        var rIDObj = {}
+        rIDObj[roomID_str] = newPoints.toString();
+        curl.request({
+            method: 'PUT',
+            url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customFields',
+            data: JSON.stringify(rIDObj),
+            headers: 
+            {
+             'Authorization': 'Bearer '+ accessToken
+            }
+          }, function (error, response, body) {
+              if (!error) {
+                console.log("succeeded");
+                res.json(0);
+              }
+              else
+              {
+                console.log("error");
+                console.log(response);
+                res.json(-1);
+              }
+          });
+        }
+        else
+        {
+          console.log("error");
+        }
   });
 }
+    
 
+exports.getPoints = function(req, res) {
+        var userID = req.query.userID;
+        if(!userID) userID = 54;
+        var roomID = req.query.roomID;
+        if(!roomID) roomID = 26;
+        var options = {
+              method: 'POST',
+              url: 'https://oauth.isaacloud.com/token',
+              data: { grant_type:'client_credentials'},
+              headers: {
+                  'Authorization': 'Basic NjE6YzVlMzMwOWVjNGEyNzIzZDUzZjhjNmExODVlMmMz'
+              }
+        };
+        curl.request(options, function (error, response, body) {
+        if(!error) {
+          accessToken = JSON.parse(response).access_token;
+        curl.request({
+          method: 'GET',
+          url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customfields',
+          headers: 
+          {
+            'Authorization': 'Bearer '+ accessToken
+          }
+        }, function (error, response, body) {
+            if(!error){
+              var obj = JSON.parse(response);
+              console.log(JSON.parse(obj[roomID.toString()]));
+              var currPoint = parseInt(obj[roomID.toString()]);
+              res.json(currPoint);
+            }
+            else {console.log("error");}
+          });
+        }
+      });
+}

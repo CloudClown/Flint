@@ -81,8 +81,9 @@ exports.getLevel = function(req, res) {
     }, function (error, response, body) {
       if (!error) {
         var obj = JSON.parse(response);
-        console.log(JSON.parse(obj[roomID.toString()]));
+        console.log(obj);
         var ppoint = parseInt(obj[roomID.toString()]);
+        console.log(ppoint);
         if(ppoint > 200)
           res.json(10);
         else if(ppoint > 160)
@@ -137,7 +138,7 @@ exports.updatePoints = function(req, res) {
         rIDObj[roomID_str] = newPoints.toString();
         curl.request({
             method: 'PUT',
-            url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customFields',
+            url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customfields',
             data: JSON.stringify(rIDObj),
             headers: 
             {
@@ -146,7 +147,7 @@ exports.updatePoints = function(req, res) {
           }, function (error, response, body) {
               if (!error) {
                 console.log("succeeded");
-                res.json(0);
+                res.json(newPoints);
               }
               else
               {

@@ -132,6 +132,7 @@ exports.updatePoints = function(req, res) {
         if(!userID) userID = 54;
         if(!newPoints) newPoints = 1;
         if(!roomID) roomID = 26;
+        var roomID_str = roomID.toString();
         var rIDObj = {}
         rIDObj[roomID_str] = newPoints.toString();
         curl.request({

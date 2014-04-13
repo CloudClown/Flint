@@ -13,6 +13,7 @@
     "goinstant-auth": "*",
     "goinstant-rest": "*",
     "goinstant-assert": "*",
-    "curlrequest": "*"
+    "curlrequest": "*",
+    "request":"*"
   }
 }

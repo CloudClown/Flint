@@ -24,7 +24,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
     $scope.mateId.$sync();
     $scope.mateId.$on('ready', function() {
       mateId = $scope.mateId.$value;
-      console.log(mateId)
+      console.log($scope.mateId)
 
     $scope.movies = $goKey('accounts/'+mateId+'/movies');
     $scope.movies.$sync();

@@ -51,8 +51,6 @@ app.post('/isaacloud/init', initIsaacloud.initIsaacloud);
 app.get('/match', routes.match);
 app.get('/chat', routes.chat);
 
-app.post('./twilio', flintTwilio.flintTwilio);
-
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

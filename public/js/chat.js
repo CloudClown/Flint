@@ -15,6 +15,7 @@ var test;
 chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimpleLogin) {
   var room = getParamByName('room');
 
+
   $scope.interests = [];
   var ref = new Firebase("https://flint.firebaseio.com/");
   $scope.auth = $firebaseSimpleLogin(ref);
@@ -35,8 +36,30 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
       $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 20);
 
       $scope.points.$value += 1;
-      console.log($scope.points.$value);
       $scope.points.$set($scope.points.$value);
+
+      $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+        $scope.level = data; 
+        console.log("new level:" + data);
+      });
+      $.get( "/isaacloud/getPoints?userID=" + $scope.isaacloudID.$value + "&roomID=" + room, function( data ) {
+
+        console.log(data);
+
+          var points = data + 1;
+          $.ajax({
+            url: '/isaacloud/updatePoints?userID=' + $scope.isaacloudID.$value + '&roomID=' + room + '&newPoints=' + points,
+            type: 'PUT',
+            success: function(result) {
+              console.log("Returned from isaacloud: " + result);
+            }
+          });
+        });
+
+
+      $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room, function( data ) {
+        $scope.level = data; 
+      });
     });
     }
 
@@ -50,6 +73,14 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
       $scope.messages = $goKey('rooms/' + room + '/messages');
       $scope.messages.$sync();
 
+      $scope.isaacloudID = $goKey('accounts/' + user.id + '/isaacloudID');
+      $scope.isaacloudID.$sync();
+      $scope.isaacloudID.$on('ready', function() {
+        $.get( "/isaacloud/newRoom?userID=" + $scope.isaacloudID.$value + "&roomID=" + room, function( data ) {
+          console.log("Returned from isaacloud: NEWROOM" + data);
+        });
+      });
+
       $scope.points = $goKey('rooms/' + room + '/' + user.id);
       $scope.points.$sync();
       $scope.points.$on('ready', function() {
@@ -57,12 +88,17 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
           $scope.points.$set(0);
       });
 
+    $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+      $scope.level = data; 
+      console.log("new level:" + data);
+    });
 
     $scope.movies = $goKey('accounts/'+mateId+'/movies');
     $scope.movies.$sync();
     $scope.movies.$on('ready', function() {
       $scope.interests.push({
         title: "Movies",
+        level: 1,
         items: [
         $scope.movies[0],
         $scope.movies[1],
@@ -76,6 +112,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
     $scope.music.$on('ready', function() {
       $scope.interests.push({  
         title: "Music",
+        level: 2,
         items: [
         $scope.music[0],
         $scope.music[1],
@@ -89,6 +126,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
     $scope.tv.$on('ready', function() {
       $scope.interests.push({  
         title: "TV Shows",
+        level: 3,
         items: [
         $scope.tv[0],
         $scope.tv[1],
@@ -102,6 +140,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
     $scope.languages.$on('ready', function() {
       $scope.interests.push({  
         title: "Languages",
+        level: 4,
         items: [
         $scope.languages[0],
         $scope.languages[1],
@@ -115,6 +154,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
     $scope.hometown.$on('ready', function( ) { 
       $scope.interests.push({
         title: "Hometown",
+        level: 5,
         items: [
         $scope.hometown.$value
         ]
@@ -126,6 +166,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
     $scope.likes.$on('ready', function( ) { 
       $scope.interests.push({
         title: "Likes",
+        level: 6,
         items: [
         $scope.likes[0].name,
         $scope.likes[1].name,
@@ -164,11 +205,24 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
   }
 
   $scope.upScore = function() {
-    points += 5;
+    $scope.points.$value += 5;
+    $scope.points.$set($scope.points.$value);
+    console.log($scope.points.$value);
+
+    $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+      $scope.level = data; 
+      console.log("new level:" + data);
+    });
   }
 
   $scope.downScore = function() {
-    points -= 5;
+    $scope.points.$value -= 5;
+    $scope.points.$set($scope.points.$value);
+    console.log($scope.points.$value);
+    $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+      $scope.level = data; 
+      console.log("new level:" + data);
+    });
   }
 });
 

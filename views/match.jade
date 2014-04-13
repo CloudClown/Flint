@@ -1,0 +1,14 @@
+extends layout
+
+block links
+  link(rel='stylesheet', href='css/style1.css')
+
+block scripts
+  script(src='js/view.js')
+  script(src='js/todo.js')
+
+block content
+  .container
+    .todos-wrapper
+      ul#list
+        li(data-empty="true") There are no items yet, add one!

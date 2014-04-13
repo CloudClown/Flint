@@ -43,6 +43,8 @@ if ('development' === app.get('env')) {
 app.get('/', routes.index);
 app.get('/isaacloud/getLevel', getLevel.getLevel);
 app.post('/isaacloud/init', initIsaacloud.initIsaacloud);
+app.get('/match', routes.match);
+app.get('/chat', routes.chat);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

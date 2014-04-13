@@ -6,10 +6,23 @@ block scripts
 
 block content
   #messageApp(ng-controller='ChatCtrl')
+    aside.unlocks
+      h1 Interests
+      .interest(ng-repeat='interest in interests')
+        div.title(slide-toggle=".expand_{{interest.$$hashKey}}") {{ interest.title }}
+          span.arrow
+        .slideable(class='expand_{{interest.$$hashKey}}', easing="eaes-in-out",duration=".40s")
+          ul
+            li(ng-repeat='item in interest.items') {{ item }}
+
+
     // Messages Displayed
-    aside.photos
     #messageContainer
       #messages
+        .notification-bar 
+          ul
+            li.slidein.notification(ng-repeat='notification in notifications | filter:live')
+             .text(ng-click='remove(notifications, $index)') {{ notification.text }}
         .message(ng-repeat='message in messages')
           .rating(class="{{message.rating}}")
             .plus(ng-click='message.rating="plus"')
@@ -18,17 +31,37 @@ block content
           span.content {{ message.content }}
       // New Message Form
       form(ng-submit='sendMessage()')
-        input(ng-model="messageContent")
-        button(type='submit') Send
+        input(ng-model="messageContent", placeholder="Send a message")
 
       .progress
-        .info
-      
-    aside.unlocks
-      .interest(ng-repeat='interest in interests')
-        div.title(slide-toggle=".expand_{{interest.$$hashKey}}") {{ interest.title }}
-        .slideable(class='expand_{{interest.$$hashKey}}', easing="eaes-in-out",duration=".40s")
-          ul(ng-repeat='item in interest.items')
-            li {{ item }}
+        .profile.photo
+        .photo1.photo
+        .photo2.photo
+        .photo3.photo
+
+    aside.photos
+      .level.ten 10
+        span.arrow
+      .level.nine 9
+        span.arrow
+      .level.eight 8
+        span.arrow
+      .level.seven 7
+        span.arrow
+      .level.six 6
+        span.arrow
+      .level.five 5 
+        span.arrow
+      .level.four 4
+        span.arrow
+      .level.three 3
+        span.arrow
+      .level.two 2
+        span.arrow
+      .level.one 1
+        span.arrow
+      .level.zero.active 0
+        span.arrow
+
 
 

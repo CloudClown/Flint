@@ -1,13 +1,13 @@
 
 $( document ).ready( function() {
-  $('#messages').height($(window).height()-207);
-  $('.unlocks').height($(window).height() -32);
-  $('.photos').height($(window).height() -32);
+  $('#messages').height($(window).height()-210);
+  $('.unlocks').height($(window).height() -30);
+  $('.photos').height($(window).height() -54);
 
   $( window ).resize(function() {
-    $('#messages').height($(window).height()-107);
-    $('.unlocks').height($(window).height() -32);
-    $('.photos').height($(window).height() -32);
+    $('#messages').height($(window).height()-210);
+    $('.unlocks').height($(window).height() -30);
+    $('.photos').height($(window).height() -54);
   });
 
 });

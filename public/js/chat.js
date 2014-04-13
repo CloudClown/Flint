@@ -31,6 +31,17 @@ chatApp.controller('ChatCtrl', function($scope, $goKey) {
       ]
     }
   ];
+
+  $scope.notifications = [
+  {
+    text: "This is a sample notification",
+    live: true
+  }
+  ];
+
+  $scope.remove = function(array, index){
+    array.splice(index, 1);
+  }
   
   // We can attach a listener to the 'ready' event
   // to be notified when our model is in sync

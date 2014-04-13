@@ -618,3 +618,6 @@ header {
 
   100% {
     top: 0; } }
+
+.hidden {
+  display: none; }

@@ -35,9 +35,11 @@ exports.newRoom = function(req, res) {
             curl.request(customFieldOps, function (error, response, body) {
               if(!error){
                 console.log(response);
+                res.json(0);
               }
               else {
                 console.log("add customfield error");
+                res.json(-1);
               }
         });
     } 

@@ -37,9 +37,14 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
 
       $scope.points.$value += 1;
       $scope.points.$set($scope.points.$value);
-        $.get( "/isaacloud/getPoints?userID=" + $scope.isaacloudID.$value + "&roomID=" + room, function( data ) {
-          
-          console.log(data);
+
+      $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+        $scope.level = data; 
+        console.log("new level:" + data);
+      });
+      $.get( "/isaacloud/getPoints?userID=" + $scope.isaacloudID.$value + "&roomID=" + room, function( data ) {
+
+        console.log(data);
 
           var points = data + 1;
           $.ajax({
@@ -83,6 +88,10 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
           $scope.points.$set(0);
       });
 
+    $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+      $scope.level = data; 
+      console.log("new level:" + data);
+    });
 
     $scope.movies = $goKey('accounts/'+mateId+'/movies');
     $scope.movies.$sync();
@@ -198,12 +207,22 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
   $scope.upScore = function() {
     $scope.points.$value += 5;
     $scope.points.$set($scope.points.$value);
+    console.log($scope.points.$value);
+
+    $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+      $scope.level = data; 
+      console.log("new level:" + data);
+    });
   }
 
   $scope.downScore = function() {
     $scope.points.$value -= 5;
     $scope.points.$set($scope.points.$value);
+    console.log($scope.points.$value);
+    $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room+"&newPoints=" + $scope.points.$value, function( data ) {
+      $scope.level = data; 
+      console.log("new level:" + data);
+    });
   }
-  $scope.level = 4;
 });
 

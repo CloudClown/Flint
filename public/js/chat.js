@@ -14,7 +14,6 @@ var test;
 
 chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimpleLogin) {
   var room = getParamByName('room');
-  var points = 0;
 
   $scope.interests = [];
   var ref = new Firebase("https://flint.firebaseio.com/");
@@ -35,7 +34,9 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
       $scope.messageContent = '';
       $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 20);
 
-      points += 1;
+      $scope.points.$value += 1;
+      console.log($scope.points.$value);
+      $scope.points.$set($scope.points.$value);
     });
     }
 
@@ -46,8 +47,15 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
       mateId = $scope.mateId.$value;
       console.log($scope.mateId)
 
-      $scope.messages = $goKey('accounts/' + user.id + '/matches/' + room + '/messages');
-    $scope.messages.$sync();
+      $scope.messages = $goKey('rooms/' + room + '/messages');
+      $scope.messages.$sync();
+
+      $scope.points = $goKey('rooms/' + room + '/' + user.id);
+      $scope.points.$sync();
+      $scope.points.$on('ready', function() {
+        if (!$scope.points.$value)
+          $scope.points.$set(0);
+      });
 
 
     $scope.movies = $goKey('accounts/'+mateId+'/movies');
@@ -157,6 +165,10 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
 
   $scope.upScore = function() {
     points += 5;
+  }
+
+  $scope.downScore = function() {
+    points -= 5;
   }
 });
 

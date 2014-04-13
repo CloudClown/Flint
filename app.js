@@ -11,7 +11,7 @@ var path = require('path');
 var sass = require('node-sass');
 var app = express();
 
-var flintTwilio = require('./routes/flint-twilio');
+var flintTwilio = require('./routes/flintTwilio');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -51,7 +51,7 @@ app.post('/isaacloud/init', initIsaacloud.initIsaacloud);
 app.get('/match', routes.match);
 app.get('/chat', routes.chat);
 
-app.post('./twilio', flint-twilio.flintTwilio);
+app.post('./twilio', flintTwilio.flintTwilio);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

@@ -10,11 +10,12 @@ block content
       aside.unlocks
         h1 Interests
         .interest(ng-repeat='interest in interests')
-          div.title(slide-toggle=".expand_{{interest.$$hashKey}}") {{ interest.title }}
+          .hide(ng-if=' level > interest.level ')
+            div.title(slide-toggle=".expand_{{interest.$$hashKey}}") {{ interest.title }}
             span.arrow
-          .slideable(class='expand_{{interest.$$hashKey}}', easing="eaes-in-out",duration=".40s")
-            ul
-              li(ng-repeat='item in interest.items') {{ item }}
+            .slideable(class='expand_{{interest.$$hashKey}}', easing="eaes-in-out",duration=".40s")
+              ul
+                li(ng-repeat='item in interest.items') {{ item }}
 
 
       // Messages Displayed
@@ -35,39 +36,39 @@ block content
           input(ng-model="messageContent", placeholder="Send a message")
 
         .progress
-          .photo1.photo
+          .photo1.photo(ng-if="level > 6")
             a(href='{{photo1}}')
               img(src='{{photo1}}')
-          .photo2.photo
+          .photo2.photo(ng-if="level > 7")
             a(href='{{photo2}}')
               img(src='{{photo2}}')
-          .photo3.photo
+          .photo3.photo(ng-if="level > 8")
             a(href='{{photo3}}')
               img(src='{{photo3}}')
-          .photo4.photo
+          .photo4.photo(ng-if="level > 9")
             a(href='{{photo4}}')
               img(src='{{photo4}}')
 
       aside.photos
-        .level.ten 10
+        .level.ten(ng-if="level > 9") 10
           span.arrow
-        .level.nine 9
+        .level.nine(ng-if="level > 8") 9
           span.arrow
-        .level.eight 8
+        .level.eight(ng-if="level > 7") 8
           span.arrow
-        .level.seven 7
+        .level.seven(ng-if="level > 6") 7
           span.arrow
-        .level.six 6
+        .level.six(ng-if="level > 5") 6
           span.arrow
-        .level.five 5 
+        .level.five(ng-if="level > 4") 5 
           span.arrow
-        .level.four 4
+        .level.four(ng-if="level > 3") 4
           span.arrow
-        .level.three 3
+        .level.three(ng-if="level > 2") 3
           span.arrow
-        .level.two 2
+        .level.two(ng-if="level > 1") 2
           span.arrow
-        .level.one 1
+        .level.one(ng-if="level > 0") 1
           span.arrow
         .level.zero.active 0
           span.arrow

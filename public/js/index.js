@@ -111,11 +111,14 @@ var females = [
           if(accountsValue[arrayId[random]].gender == gender) {
           var match = user.key('matches');
           match.get(function(err, value) {
-            if(value == null) value = [];
-            var matchRoom = {};
-            matchRoom[currCounter.toString()] =  {"mateId": accountsValue[arrayId[random]].facebookId};
-            value.push(matchRoom);
-            match.set(value);
+            //if(value == null) value = [];
+            var matchRoom = match.key(currCounter.toString()); 
+            var matchRoomNew = matchRoom.key('mateId');
+            matchRoomNew.set(accountsValue[arrayId[random]].facebookId);
+            //var matchRoom = {};
+            //matchRoom[currCounter.toString()] =  {"mateId": accountsValue[arrayId[random]].facebookId};
+            //value.push(matchRoom);
+            //match.add(matchRoom);
           });
           break;
         }

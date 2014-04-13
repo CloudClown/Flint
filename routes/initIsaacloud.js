@@ -33,7 +33,7 @@ exports.initIsaacloud = function (req, res) {
             'Content-Type': 'application/json;UTF-8'
           }
         }, function (error, response, body) {
-        if (JSON.stringify(response).id == null){
+        if (JSON.parse(response).id == null){
                 console.log("User has already been created.");
                 res.json(-1);
             }

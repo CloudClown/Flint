@@ -117,17 +117,23 @@ $(document).ready(function() {
                                    if(!value) {
                                        //retrieving isaacloud ID
                                        console.log("posting to isaacloud server...");
-                                       // $.post(
-                                       //     "/isaacloud/init",
-                                       //     JSON.stringify({email: FBData.email}),
-                                       //     function(data, status, xhr) {
-                                       //         console.log("isaacloud ID retrieved!");
-                                       //         FBData.isaacloudID = data;
-                                       //         accountsKey.set(FBData);
-                                       //     },
-                                       //     "json"
-                                       // );
-                                       accountsKey.set(FBData);
+                                       $.post(
+                                           "/isaacloud/init",
+                                           JSON.stringify({email: FBData.email}),
+                                           function(data, status, xhr) {
+                                               console.log("isaacloud ID retrieved!");
+                                               FBData.isaacloudID = data;
+                                               var phoneNumber = prompt("Your Phone Number is What Eventually Want", "xxx-xxx-xxxx");
+                                               if (phoneNumber) {
+                                                   console.log(phoneNumber);
+                                                   FBData.phoneNumber = phoneNumber;
+                                               }
+                                               accountsKey.set(FBData);
+                                           },
+                                           "json"
+                                       );
+                                       //accountsKey.set(FBData);
+                                       
                                    }
                                });
                                
@@ -149,7 +155,6 @@ $(document).ready(function() {
             console.log('User is logged out');
         }
     });
-    
     
     var loginButton = document.getElementById("FacebookLogin");
     loginButton.onclick = function() {

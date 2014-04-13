@@ -28,7 +28,6 @@
       		console.log(value);
       		for(var l in value) {
       			var matchList = room.key('accounts/' + value[l]['mateId'] + '/name');
-
       			matchList.get(function(err, val) {
       				var $li = $('<li>'+ val + '</li>');
       				console.log(l);
@@ -36,6 +35,7 @@
       				var $colorBlock = $("<a href=\"/chat?room=" + l + "\"><div style=\"background-color:#" + randomColor + "; width:34px; height:34px;\"></div></a>");
 	    			$li.prepend($colorBlock);
 	    			$('#list').append($li);
+	    			console.log("listening!!");
       			});
       		}
       	}

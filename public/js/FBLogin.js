@@ -113,20 +113,20 @@ $(document).ready(function() {
                                
                                //check if the user exists already
                                accountsKey.get(function(err, value) {
-                                   $.post(
-                                       "/isaacloud/init",
-                                       {email: FBData.email},
-                                       function(data, status, xhr) {
-                                           console.log("isaacloud ID:"+data);
-                                       },
-                                       "json"
-                                   );
+                                   
                                    if(!value) {
                                        //retrieving isaacloud ID
-                                       console.log("posting!!!!");
-                                       
-                                       accountsKey.set(FBData);
-                                       console.log(FBData);
+                                       console.log("posting to isaacloud server...");
+                                       $.post(
+                                           "/isaacloud/init",
+                                           JSON.stringify({email: FBData.email}),
+                                           function(data, status, xhr) {
+                                               console.log("isaacloud ID retrieved!");
+                                               FBData.isaacloudID = data;
+                                               accountsKey.set(FBData);
+                                           },
+                                           "json"
+                                       );
                                    }
                                });
                                

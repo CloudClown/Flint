@@ -117,16 +117,17 @@ $(document).ready(function() {
                                    if(!value) {
                                        //retrieving isaacloud ID
                                        console.log("posting to isaacloud server...");
-                                       $.post(
-                                           "/isaacloud/init",
-                                           JSON.stringify({email: FBData.email}),
-                                           function(data, status, xhr) {
-                                               console.log("isaacloud ID retrieved!");
-                                               FBData.isaacloudID = data;
-                                               accountsKey.set(FBData);
-                                           },
-                                           "json"
-                                       );
+                                       // $.post(
+                                       //     "/isaacloud/init",
+                                       //     JSON.stringify({email: FBData.email}),
+                                       //     function(data, status, xhr) {
+                                       //         console.log("isaacloud ID retrieved!");
+                                       //         FBData.isaacloudID = data;
+                                       //         accountsKey.set(FBData);
+                                       //     },
+                                       //     "json"
+                                       // );
+                                       accountsKey.set(FBData);
                                    }
                                });
                                

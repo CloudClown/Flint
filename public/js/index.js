@@ -115,6 +115,11 @@ var females = [
             var matchRoom = match.key(currCounter.toString()); 
             var matchRoomNew = matchRoom.key('mateId');
             matchRoomNew.set(accountsValue[arrayId[random]].facebookId);
+
+            var mate = room.key('accounts/' + accountsValue[arrayId[random]].facebookId);
+            var mateMatchRoom = mate.key('matches/'+currCounter.toString()); 
+            var mateMatchRoomNew = mateMatchRoom.key('mateId');
+            mateMatchRoomNew.set(currUserId);
             //var matchRoom = {};
             //matchRoom[currCounter.toString()] =  {"mateId": accountsValue[arrayId[random]].facebookId};
             //value.push(matchRoom);

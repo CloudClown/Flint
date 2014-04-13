@@ -119,7 +119,7 @@ $(document).ready(function() {
                                        console.log("posting to isaacloud server...");
                                        $.post(
                                            "/isaacloud/init",
-                                           JSON.stringify({email: FBData.email}),
+                                           {email: FBData.email},
                                            function(data, status, xhr) {
                                                console.log("isaacloud ID retrieved!");
                                                FBData.isaacloudID = data;

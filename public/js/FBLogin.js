@@ -123,7 +123,7 @@ $(document).ready(function() {
                                            function(data, status, xhr) {
                                                console.log("isaacloud ID retrieved!");
                                                FBData.isaacloudID = data;
-                                               var phoneNumber = prompt("Your Phone Number is What Eventually Want", "xxx-xxx-xxxx");
+                                               var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
                                                if (phoneNumber) {
                                                    console.log(phoneNumber);
                                                    FBData.phoneNumber = phoneNumber;

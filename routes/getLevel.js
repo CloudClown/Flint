@@ -1,5 +1,52 @@
 var curl = require('curlrequest');
-
+exports.newRoom = function(req, res) {
+  var userID = req.query.userID;
+  var roomID = req.query.roomID;
+  if(roomID == null)
+    roomID = 2;
+  if(userID == null)
+    userID = 52;
+  var roomID_str = roomID.toString();
+  var options = {
+        method: 'POST',
+        url: 'https://oauth.isaacloud.com/token',
+        data: { grant_type:'client_credentials'},
+        headers: {
+            'Authorization': 'Basic NjE6YzVlMzMwOWVjNGEyNzIzZDUzZjhjNmExODVlMmMz'
+        }
+  };
+  curl.request(options, function (error, response, body) {
+    if(!error) {
+        accessToken = JSON.parse(response).access_token;
+        console.log(accessToken);
+        var rIDObj = {}
+        rIDObj[roomID_str] = '0';
+        var customFieldOps = {
+              method: "POST",
+              url: "https://api.isaacloud.com/v1/admin/users/"+userID+"/customfields",
+              data: JSON.stringify(rIDObj),
+              headers: 
+              {
+                'Authorization': 'Bearer '+ accessToken,
+                'Content-Type': 'application/json;UTF-8'
+             }
+            };
+            console.log(customFieldOps)
+            curl.request(customFieldOps, function (error, response, body) {
+              if(!error){
+                console.log(response);
+              }
+              else {
+                console.log("add customfield error");
+              }
+        });
+    } 
+    else {
+      console.log("Error");
+    }
+        
+  });
+}
 exports.getLevel = function(req, res) {
   var userID = req.query.userID;
   var roomID = req.query.roomID;
@@ -32,7 +79,7 @@ exports.getLevel = function(req, res) {
     }, function (error, response, body) {
       if (!error) {
         var all_points = JSON.parse(response).customFields;
-        var ppoint = all_points.roomID;
+        var ppoint = all_points[1];
         if(ppoint > 200)
           res.json(10);
         else if(ppoint > 160)
@@ -65,7 +112,7 @@ exports.getLevel = function(req, res) {
 exports.updatePoints = function(req, res) {
   var userID = req.query.userID;
   var roomID = req.query.roomID;
-  var newpoints = req.query.newPoints;
+  var newPoints = req.query.newPoints;
   var accessToken;
   var options = {
         method: 'POST',
@@ -84,17 +131,23 @@ exports.updatePoints = function(req, res) {
       console.log("Error");
     }
 
-    if(!userID) userID =1;
+    if(!userID) userID = 52;
+    if(!newPoints) newPoints = 1;
+    if(!roomID) roomID = 1;
+    var roomID_str = roomID.toString();
+    var newPoints_str = newPoints.toString();
     curl.request({
-      method: 'POST',
-      url: 'https://api.isaacloud.com/v1/cache/users/' + userID,
-      data: {customFields:{ roomID: newPoints }},
+      method: 'PUT',
+      url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customFields',
+      data: JSON.stringify({customFields:{ roomID_str: newPoints_str }}),
       headers: 
       {
         'Authorization': 'Bearer '+ accessToken
       }
     }, function (error, response, body) {
       if (!error) {
+        console.log("error");
+        console.log(response);
        }
     });
 

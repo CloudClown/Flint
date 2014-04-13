@@ -25,7 +25,7 @@ exports.initIsaacloud = function (req, res) {
       curl.request({
           method: "POST",
           url: "https://api.isaacloud.com/v1/admin/users",
-          data: JSON.stringify({"email": "asassa"}),
+          data: JSON.stringify({"email": "superrobert9211@gmail.com"}),
           headers: 
           {
             'Authorization': 'Bearer '+ accessToken,

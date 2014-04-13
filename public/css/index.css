@@ -381,7 +381,7 @@ header {
   header:after {
     clear: both; }
   header .title {
-    position: relative;
+    position: absolute;
     left: 50%;
     margin-top: -25px; }
 

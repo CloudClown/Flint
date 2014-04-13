@@ -20,7 +20,7 @@ block content
       // Messages Displayed
       #messageContainer
         #messages
-          .notification-bar 
+          //.notification-bar 
             ul
               li#alert(ng-repeat='notification in notifications')
                .alert(ng-click='remove(notification, $index)') {{ notification.text }}
@@ -35,10 +35,18 @@ block content
           input(ng-model="messageContent", placeholder="Send a message")
 
         .progress
-          .profile.photo
           .photo1.photo
+            a(href='{{photo1}}')
+              img(src='{{photo1}}')
           .photo2.photo
+            a(href='{{photo2}}')
+              img(src='{{photo2}}')
           .photo3.photo
+            a(href='{{photo3}}')
+              img(src='{{photo3}}')
+          .photo4.photo
+            a(href='{{photo4}}')
+              img(src='{{photo4}}')
 
       aside.photos
         .level.ten 10

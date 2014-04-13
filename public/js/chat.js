@@ -19,12 +19,32 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
   var ref = new Firebase("https://flint.firebaseio.com/");
   $scope.auth = $firebaseSimpleLogin(ref);
   $scope.auth.$getCurrentUser().then(function(user) {
+
+  $scope.sendMessage = function() {
+    var message = {
+      content: $scope.messageContent,
+      author: user.displayName,
+      rating: ""
+    };
+    // Each method returns a promise, we can use that to confirm that item was
+    // added succesfully
+    if($scope.messageContent)
+      $scope.messages.$add(message).then(function() {
+        $scope.messageContent = '';
+        $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 20);
+      });
+  }
+
     var mateId;
     $scope.mateId = $goKey('accounts/' + user.id + '/matches/' + room + '/mateId');
     $scope.mateId.$sync();
     $scope.mateId.$on('ready', function() {
       mateId = $scope.mateId.$value;
       console.log($scope.mateId)
+
+    $scope.messages = $goKey('accounts/' + user.id + '/matches/' + room + '/messages');
+    $scope.messages.$sync();
+
 
     $scope.movies = $goKey('accounts/'+mateId+'/movies');
     $scope.movies.$sync();
@@ -102,13 +122,20 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
       });
     });
 
+    $scope.photos = $goKey('accounts/' + mateId + '/photos');
+    $scope.photos.$sync();
+    $scope.photos.$on('ready', function()  {
+        $scope.photo1 = $scope.photos[0] ;
+        $scope.photo2 = $scope.photos[1] ;
+        $scope.photo3 = $scope.photos[2] ;
+        $scope.photo4 = $scope.photos[3] ;
+        console.log($scope.photos)
+    });
+
     });
 
   });
 
-
-  $scope.messages = $goKey('messages');
-  $scope.messages.$sync();
 
   $scope.user = $goKey('accounts/')
 
@@ -122,33 +149,6 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
   $scope.remove = function(array, index){
     console.log(remove);
     array.splice(index, 1);
-  }
-  
-  // We can attach a listener to the 'ready' event
-  // to be notified when our model is in sync
-  $scope.messages.$on('ready', function() {
-    // Our local and remote structures are now in sync
-  });
-
-  // We can attach a listener to the 'error' event
-  // to be notified when a problem occurs
-  $scope.messages.$on('error', function() {
-    // Uh oh
-  });
-
-  $scope.sendMessage = function() {
-    var message = {
-      content: $scope.messageContent,
-      author: "User",
-      rating: ""
-    };
-    // Each method returns a promise, we can use that to confirm that item was
-    // added succesfully
-    if($scope.messageContent)
-      $scope.messages.$add(message).then(function() {
-        $scope.messageContent = '';
-        $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 20);
-      });
   }
 });
 

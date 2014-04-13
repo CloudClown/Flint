@@ -8,6 +8,10 @@
   </head>
   <body>
     <script src="https://cdn.goinstant.net/v1/platform.min.js"></script>
+    <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
+    <script type='text/javascript'
+        src='https://cdn.firebase.com/js/simple-login/1.3.2/firebase-simple-login.js'>
+</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="js/view.js"></script>
@@ -23,24 +27,42 @@
 		{ "id":5, "firstName":"Anna" , "lastName":"Smith", "counter": 0  }, 
 		{ "id":6, "firstName":"Portia" , "lastName": "Jones", "counter": 0  }
 		];
-		var connectUrl = 'https://goinstant.net/469216b0e2ee/UserList';
+		var chatRef = new Firebase('https://flint.firebaseio.com');
+		var currUserId;
+		var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
+		  if (error) {
+		    // an error occurred while attempting login
+		    console.log(error);
+		  } else if (user) {
+		    // user authenticated with Firebase
+		    console.log('User ID: ' + user.uid + ', Provider: ' + user.provider);
+		    currUserId = user.uid;
+		  } else {
+		    // user is logged out
+		  }
+		});
+
+		var connectUrl = 'https://goinstant.net/469216b0e2ee/Flint';
 		var connect = goinstant.connect(connectUrl);
-		var room, counter, accounts;
+		var room, counter, accounts, accountsValue, currCounter;
 		connect.then(function(res) {
 			//$(".parentDiv").append(res);
 			console.log(res);
 			//console.log(res.rooms[1]);
 			room = res.rooms[0];
-			counter = room.key('/counter');
-			accounts = room.key('/accounts');
+			counter = room.key('counter');
+			accounts = room.key('accounts');
+
 			//counter.remove();
 			counter.get(function(err, value) {
-				if(!value) counter.set(0);
-				else counter.set(value++);
-				console.log("Works?");
+				if(value == null) counter.set(0);
+				else counter.set(value+1);
+				console.log("Work?");
 				console.log(value);
+				currCounter = value;
 			});
-
+			
+			
 		//}).then(function(res) {
 		//	items = res.value || 0;
 		//	acount = accounts.value || [];
@@ -49,7 +71,7 @@
 		//}).finally(function(){
 		//	counter.on('set',{local: true}, _handleSet);
 		//	accounts.on('add', {local: true}, _handleAdd);
-			counter.set(items+1);
+			
 		});
 
 		function _printItem(item, id) {
@@ -78,11 +100,34 @@
   		}
 
 		function match(dots) {
-			clearInterval(dots)
-			var length = females.length;
-			var random = Math.floor(Math.random()*length);
-			var firstName = females[random].firstName;
-			var lastName = females[random].lastName;
+			clearInterval(dots);
+			var userGender;
+			var gender;
+			connect.then(function(res) {
+				room = res.rooms[0];
+				userGender = room.key('accounts/currUserId/gender');
+				userGender.get(function(err, value) {
+					gender = value;
+				});
+			});
+			accounts.get(function(err, value) {
+				accountsValue = value;
+			});
+			var length = accountsValue.length;
+			while(true) {
+				var random = Math.floor(Math.random()*length);
+				if(accountsValue[random].gender == gender) {
+					var match = accounts.key('matches');
+					match.get(function(err, value) {
+						if(value == null) value = [];
+						var matchRoom = {"roomId": currCounter, "mateId": accountsValue[random].facebookId};
+						value.push(matchRoom);
+						match.set(value);
+					});
+					break;
+				}
+			}
+
 			females[random].counter++;
 			$(".parentDiv").append("The person you matched to is: " + firstName + " " + lastName + "<br>");
 			document.location.href = "index.html";
@@ -110,6 +155,9 @@
 <br>
 <p id="wait"></p>
 <div class="parentDiv">
+</div>
+</body>
+</html> class="parentDiv">
 </div>
 </body>
 </html>

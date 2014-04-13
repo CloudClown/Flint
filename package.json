@@ -12,7 +12,6 @@
     "twilio": "*",
     "goinstant-auth": "*",
     "goinstant-rest": "*",
-    "goinstant-assert": "*",
-    "request": "*"
+    "goinstant-assert": "*"
   }
 }

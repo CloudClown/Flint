@@ -328,14 +328,15 @@ button {
   top: 2px;
   display: inline-block; }
   .rating .plus, .rating .minus {
+    border-radius: 6px;
     height: 15px;
     width: 18px;
     display: inline-block;
     cursor: pointer; }
   .rating .plus {
-    background-color: green; }
+    background-color: #B8E986; }
   .rating .minus {
-    background-color: red; }
+    background-color: #FF6A6A; }
 
 .plus {
   background-color: green; }

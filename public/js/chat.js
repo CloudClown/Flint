@@ -69,6 +69,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
     $scope.mateId.$on('ready', function() {
       mateId = $scope.mateId.$value;
       console.log($scope.mateId)
+      console.log("MateID: " + mateId);
 
       $scope.messages = $goKey('rooms/' + room + '/messages');
       $scope.messages.$sync();

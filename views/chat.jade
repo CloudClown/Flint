@@ -26,8 +26,8 @@ block content
                .alert(ng-click='remove(notification, $index)') {{ notification.text }}
           .message(ng-repeat='message in messages')
             .rating(class="{{message.rating}}")
-              .plus(ng-click='message.rating="plus"', ng-click='upScore()')
-              .minus(ng-click='message.rating="minus"', ng-click='downScore()')
+              .plus(ng-click='message.rating="plus; upScore()"')
+              .minus(ng-click='message.rating="minus; downScore()"')
             span.author {{ message.author }}:
             span.content {{ message.content }}
         // New Message Form

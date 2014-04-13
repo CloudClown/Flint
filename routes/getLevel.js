@@ -73,15 +73,16 @@ exports.getLevel = function(req, res) {
     if(!userID) userID =1;
     curl.request({
       method: 'GET',
-      url: 'https://api.isaacloud.com/v1/cache/users/' + userID,
+      url: 'https://api.isaacloud.com/v1/cache/users/' + userID +'/customfields',
       headers: 
       {
         'Authorization': 'Bearer '+ accessToken
       }
     }, function (error, response, body) {
       if (!error) {
-        var all_points = JSON.parse(response).customFields;
-        var ppoint = all_points[1];
+        var obj = JSON.parse(response);
+        console.log(JSON.parse(obj[roomID.toString()]));
+        var ppoint = parseInt(obj[roomID.toString()]);
         if(ppoint > 200)
           res.json(10);
         else if(ppoint > 160)
@@ -188,7 +189,6 @@ exports.getPoints = function(req, res) {
         }, function (error, response, body) {
             if(!error){
               var obj = JSON.parse(response);
-              console.log(JSON.parse(obj[roomID.toString()]));
               var currPoint = parseInt(obj[roomID.toString()]);
               res.json(currPoint);
             }

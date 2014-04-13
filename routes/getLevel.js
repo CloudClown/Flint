@@ -52,6 +52,7 @@ exports.newRoom = function(req, res) {
 exports.getLevel = function(req, res) {
   var userID = req.query.userID;
   var roomID = req.query.roomID;
+  var newPoints = req.query.newPoints;
   var accessToken;
   var options = {
         method: 'POST',
@@ -82,7 +83,8 @@ exports.getLevel = function(req, res) {
       if (!error) {
         var obj = JSON.parse(response);
         console.log(obj);
-        var ppoint = parseInt(obj[roomID.toString()]);
+       //gg
+        var ppoint = newPoints;
         console.log(ppoint);
         if(ppoint > 200)
           res.json(10);

@@ -15,6 +15,7 @@ var test;
 chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimpleLogin) {
   var room = getParamByName('room');
 
+
   $scope.interests = [];
   var ref = new Firebase("https://flint.firebaseio.com/");
   $scope.auth = $firebaseSimpleLogin(ref);
@@ -35,8 +36,21 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
       $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 20);
 
       $scope.points.$value += 1;
-      console.log($scope.points.$value);
       $scope.points.$set($scope.points.$value);
+        $.get( "/isaacloud/getPoints?userID=" + $scope.isaacloudID.$value + "&roomID=" + room, function( data ) {
+          
+          console.log(data);
+
+          var points = data + 1;
+          $.ajax({
+            url: '/isaacloud/updatePoints?userID=' + $scope.isaacloudID.$value + '&roomID=' + room + '&newPoints=' + points,
+            type: 'PUT',
+            success: function(result) {
+              console.log("Returned from isaacloud: " + result);
+            }
+          });
+        });
+
 
       $.get("/isaacloud/getLevel?userID="+$scope.isaacloudID.$value+"&roomID="+room, function( data ) {
         $scope.level = data; 
@@ -58,7 +72,7 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
       $scope.isaacloudID.$sync();
       $scope.isaacloudID.$on('ready', function() {
         $.get( "/isaacloud/newRoom?userID=" + $scope.isaacloudID.$value + "&roomID=" + room, function( data ) {
-          console.log("Returned from isaacloud: " + data);
+          console.log("Returned from isaacloud: NEWROOM" + data);
         });
       });
 
@@ -182,11 +196,13 @@ chatApp.controller('ChatCtrl', function($scope, $goKey, $firebase, $firebaseSimp
   }
 
   $scope.upScore = function() {
-    points += 5;
+    $scope.points.$value += 5;
+    $scope.points.$set($scope.points.$value);
   }
 
   $scope.downScore = function() {
-    points -= 5;
+    $scope.points.$value -= 5;
+    $scope.points.$set($scope.points.$value);
   }
   $scope.level = 4;
 });

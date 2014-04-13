@@ -137,7 +137,7 @@ exports.updatePoints = function(req, res) {
         rIDObj[roomID_str] = newPoints.toString();
         curl.request({
             method: 'PUT',
-            url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customFields',
+            url: 'https://api.isaacloud.com/v1/cache/users/' + userID + '/customfields',
             data: JSON.stringify(rIDObj),
             headers: 
             {

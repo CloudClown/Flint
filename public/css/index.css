@@ -273,6 +273,7 @@ h1 {
 .unlocks {
   background-color: rgba(33, 33, 33, 0.8);
   color: #fff;
+  overflow: scroll;
   float: left;
   display: block;
   margin-right: 2.35765%;
@@ -459,11 +460,15 @@ header {
   display: block;
   margin-right: 3.57866%;
   width: 22.316%;
+  margin-top: 9px;
   border: 4px solid white;
-  height: 131px;
-  margin-top: 9px; }
+  max-height: 140px;
+  overflow: hidden; }
   .photo:last-child {
     margin-right: 0; }
+  .photo img {
+    width: 100%;
+    height: auto; }
 
 .notification-bar {
   position: relative;

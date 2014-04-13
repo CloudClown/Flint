@@ -115,6 +115,7 @@ var females = [
             var matchRoom = match.key(currCounter.toString()); 
             var matchRoomNew = matchRoom.key('mateId');
             matchRoomNew.set(accountsValue[arrayId[random]].facebookId);
+            console.log(accountsValue[arrayId[random]].facebookId);
 
             var mate = room.key('accounts/' + accountsValue[arrayId[random]].facebookId);
             var mateMatchRoom = mate.key('matches/'+currCounter.toString()); 
@@ -128,7 +129,7 @@ var females = [
           break;
         }
       }
-      document.location.href = "/chat?room=" + currCounter;
+      //document.location.href = "/chat?room=" + currCounter;
       });
         });
       });

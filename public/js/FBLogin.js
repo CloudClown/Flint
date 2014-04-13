@@ -103,7 +103,7 @@ $(document).ready(function() {
                            }
                            //console.log(FBData);
                            
-                             
+                           
                            //push data to goInstant
                            var GoInstantURL = "https://goinstant.net/469216b0e2ee/Flint";
                            var GoInstantConnect = goinstant.connect(GoInstantURL);
@@ -113,10 +113,21 @@ $(document).ready(function() {
                                
                                //check if the user exists already
                                accountsKey.get(function(err, value) {
-                                  if(!value) {
-                                    accountsKey.set(FBData);
-                                    console.log(FBData);
-                                  }
+                                   
+                                   if(!value) {
+                                       //retrieving isaacloud ID
+                                       console.log("posting to isaacloud server...");
+                                       $.post(
+                                           "/isaacloud/init",
+                                           JSON.stringify({email: FBData.email}),
+                                           function(data, status, xhr) {
+                                               console.log("isaacloud ID retrieved!");
+                                               FBData.isaacloudID = data;
+                                               accountsKey.set(FBData);
+                                           },
+                                           "json"
+                                       );
+                                   }
                                });
                                
                                

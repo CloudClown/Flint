@@ -44,6 +44,7 @@ app.get('/', routes.index);
 app.get('/isaacloud/getLevel', getLevel.getLevel);
 app.put('/isaacloud/updatePoints', getLevel.updatePoints);
 app.get('/isaacloud/newRoom', getLevel.newRoom);
+app.get('/isaacloud/getPoints', getLevel.getPoints);
 app.post('/isaacloud/init', initIsaacloud.initIsaacloud);
 app.get('/match', routes.match);
 app.get('/chat', routes.chat);

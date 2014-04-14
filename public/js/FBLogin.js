@@ -112,32 +112,14 @@ $(document).ready(function() {
                                var accountsKey = room.key('accounts/'+FBData.facebookId);
                                
                                //check if the user exists already
-                               accountsKey.get(function(err, value) {
-                                   
-                                   if(!value) {
-                                       //retrieving isaacloud ID
-                                       console.log("posting to isaacloud server...");
-                                       $.post(
-                                           "/isaacloud/init",
-                                           JSON.stringify({email: FBData.email}),
-                                           function(data, status, xhr) {
-                                               console.log("isaacloud ID retrieved!");
-                                               FBData.isaacloudID = data;
-                                               var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
-                                               if (phoneNumber) {
-                                                   console.log(phoneNumber);
-                                                   FBData.phoneNumber = phoneNumber;
-                                               }
-                                               accountsKey.set(FBData);
-                                           },
-                                           "json"
-                                       );
-                                       //accountsKey.set(FBData);
-                                       
+                               accountsKey.get(function(err, value) {             
+                                   var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
+                                   if (phoneNumber) {
+                                       console.log(phoneNumber);
+                                       FBData.phoneNumber = phoneNumber;
                                    }
-                               });
-                               
-                               
+                                   accountsKey.set(FBData);
+                               });                               
                                return room.self().get();
                            });
                        });

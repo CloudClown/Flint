@@ -9,13 +9,15 @@ block scripts
   script(src='js/todo.js')
   div(id="fb-root")
     script(src='js/FBLogin.js')
-  script(src='js/index.js')
+  //script(src='js/index.js')
+  script(src="js/livematch.js")
 
 block content
   button#FacebookLogin.fb(data-action="bae") Facebook Login
   button#FacebookLogout.hidden.fb(data-action="bae") Facebook Logout
 
-  a#buttonMatch.matchButton.hidden(href="#") Match
+  .match(ng-app="Match", ng-controller="MatchCtrl")
+    a#buttonMatch.matchButton.hidden(href="matching", ng-click="match()") Match
   br
   p#wait
     .parentDiv

@@ -45,8 +45,9 @@ app.get('/isaacloud/getLevel', getLevel.getLevel);
 app.put('/isaacloud/updatePoints', getLevel.updatePoints);
 app.get('/isaacloud/newRoom', getLevel.newRoom);
 app.get('/isaacloud/getPoints', getLevel.getPoints);
-app.get('/match', routes.match);
 app.get('/chat', routes.chat);
+app.get('/match', routes.match);
+app.get('/matching', routes.matching);
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

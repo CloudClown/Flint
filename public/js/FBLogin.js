@@ -117,50 +117,51 @@ $(document).ready(function() {
                                
                                //check if the user exists already
                                accountsKey.get(function(err, value) {             
-                                  if (!value)
-                                      var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
-                                   if (phoneNumber) {
-                                       console.log(phoneNumber);
-                                       FBData.phoneNumber = phoneNumber;
-                                   }
-                                   accountsKey.set(FBData);
+                                  if (!value) {
+                                    var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
+                                    if (phoneNumber) {
+                                      console.log(phoneNumber);
+                                      FBData.phoneNumber = phoneNumber;
+                                    }
+                                    accountsKey.set(FBData);
+                                  }
                                });                               
                                return room.self().get();
                            });
-                       });
+                                                                                                                                                                                });
             };
             (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                fjs.parentNode.insertBefore(js, fjs);
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {return;}
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/all.js";
+              fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-            
+
         } else {
-            // user is logged out
-            console.log('User is logged out');
+          // user is logged out
+          console.log('User is logged out');
         }
     });
-    
+
     var loginButton = document.getElementById("FacebookLogin");
     loginButton.onclick = function() {
 
-        auth.login('facebook', {
-            scope:"user_interests,user_likes,email,user_location,user_about_me,user_hometown,user_photos,user_actions.books"
-        });
-            $( "#FacebookLogin" ).addClass( 'hidden' );
-            $( "#FacebookLogout" ).removeClass( 'hidden' );
-            $( "#buttonMatch" ).removeClass( 'hidden' );
+      auth.login('facebook', {
+        scope:"user_interests,user_likes,email,user_location,user_about_me,user_hometown,user_photos,user_actions.books"
+      });
+      $( "#FacebookLogin" ).addClass( 'hidden' );
+      $( "#FacebookLogout" ).removeClass( 'hidden' );
+      $( "#buttonMatch" ).removeClass( 'hidden' );
     };
 
     var logoutButton = document.getElementById("FacebookLogout");
     logoutButton.onclick = function() {
 
-        auth.logout();
-            $( "#FacebookLogin" ).removeClass( 'hidden' );
-            $( "#FacebookLogout" ).addClass( 'hidden' );
-            $( "#buttonMatch" ).addClass( 'hidden' );
+      auth.logout();
+      $( "#FacebookLogin" ).removeClass( 'hidden' );
+      $( "#FacebookLogout" ).addClass( 'hidden' );
+      $( "#buttonMatch" ).addClass( 'hidden' );
     };
 
 });

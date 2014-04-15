@@ -139,7 +139,12 @@ $(document).ready(function() {
                                    else {
                                        //update FB info, keep the match info
                                        console.log("User exists! Update Facebook Info...");
-                                       FBData.matches = value.matches ? value.matches : null;
+                                       if (value.matches) {
+                                           FBData.matches = value.matches;
+                                       }
+                                       if (value.matched) {
+                                           FBData.matched = value.matched;  
+                                       }
                                    }
                                    accountsKey.set(FBData);
                                    $( "#buttonMatch" ).removeClass( 'hidden' );

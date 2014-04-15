@@ -8,6 +8,10 @@ $(document).ready(function() {
             console.log(error);
             console.log('error');
         } else if (user) {
+            $( "#FacebookLogin" ).addClass( 'hidden' );
+            $( "#FacebookLogout" ).removeClass( 'hidden' );
+            $( "#buttonMatch" ).removeClass( 'hidden' );
+
             // user authenticated with Firebase
             //console.log(user);
             //facebook api
@@ -113,7 +117,8 @@ $(document).ready(function() {
                                
                                //check if the user exists already
                                accountsKey.get(function(err, value) {             
-                                   var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
+                                  if (!value)
+                                      var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
                                    if (phoneNumber) {
                                        console.log(phoneNumber);
                                        FBData.phoneNumber = phoneNumber;
@@ -144,11 +149,18 @@ $(document).ready(function() {
         auth.login('facebook', {
             scope:"user_interests,user_likes,email,user_location,user_about_me,user_hometown,user_photos,user_actions.books"
         });
+            $( "#FacebookLogin" ).addClass( 'hidden' );
+            $( "#FacebookLogout" ).removeClass( 'hidden' );
+            $( "#buttonMatch" ).removeClass( 'hidden' );
     };
 
     var logoutButton = document.getElementById("FacebookLogout");
     logoutButton.onclick = function() {
+
         auth.logout();
+            $( "#FacebookLogin" ).removeClass( 'hidden' );
+            $( "#FacebookLogout" ).addClass( 'hidden' );
+            $( "#buttonMatch" ).addClass( 'hidden' );
     };
 
 });

@@ -56,7 +56,12 @@ matchApp.controller('MatchCtrl', function($scope, $goKey, $firebase, $firebaseSi
                   $scope.mateMatched.$set(room + "").then(function() {
                     $scope.userAcc.$set($scope.mateId).then(function() {
                       $scope.mateAcc.$set(user.id).then(function() {
-                        document.location.href = "/chat?room=" + room;
+                        $scope.user = $goKey('users/' + user.id);
+                        $scope.user.$sync();
+                        $scope.user.$remove().then(function ( ) {
+                          console.log("User Removed!");
+                          document.location.href = "/chat?room=" + room;
+                        });
                       });
                     });
                   });

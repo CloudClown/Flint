@@ -2,26 +2,36 @@ $(document).ready(function() {
 
     var firebaseDataReference = new Firebase('https://flint.firebaseio.com/');
 
+    
+    $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+        console.log("init facebook!");
+        FB.init({
+            appId      : '1404685476473865',
+            status     : true,
+            xfbml      : true
+        });
+    });
+    
     var auth = new FirebaseSimpleLogin(firebaseDataReference, function(error, user) {
         if (error) {
             // an error occurred while attempting login
+            alert("Login Fails! Please Refresh the Page and Try Again!");
             console.log(error);
             console.log('error');
         } else if (user) {
             $( "#FacebookLogin" ).addClass( 'hidden' );
             $( "#FacebookLogout" ).removeClass( 'hidden' );
-            $( "#buttonMatch" ).removeClass( 'hidden' );
+            console.log("user logged in!!");
 
             // user authenticated with Firebase
             //console.log(user);
             //facebook api
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '1404685476473865',
-                    status     : true,
-                    xfbml      : true
-                });
-                
+            $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+                // FB.init({
+                //     appId      : '1404685476473865',
+                //     status     : true,
+                //     xfbml      : true
+                // });
                 var at = {access_token:user.accessToken};
                 //console.log("access token:" + at.access_token);
                 var userStr = '/'+user.id;
@@ -107,7 +117,7 @@ $(document).ready(function() {
                                }
                            }
                            //console.log(FBData);
-                          
+                           
                            
                            //push data to goInstant
                            var GoInstantURL = "https://goinstant.net/469216b0e2ee/Flint";
@@ -118,50 +128,55 @@ $(document).ready(function() {
                                
                                //check if the user exists already
                                accountsKey.get(function(err, value) {             
-                                    //var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
-                                    //if (phoneNumber) {
-                                      //console.log(phoneNumber);
-                                      //FBData.phoneNumber = phoneNumber;
-                                    //}
-                                    console.log(value);
-                                    accountsKey.set(FBData);
+                                   if (!value) {
+                                       console.log("new account added!");
+                                       //var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
+                                       //if (phoneNumber) {
+                                       //console.log(phoneNumber);
+                                       //FBData.phoneNumber = phoneNumber;
+                                       //}
+                                   }
+                                   else {
+                                       //update FB info, keep the match info
+                                       console.log("User exists! Update Facebook Info...");
+                                       FBData.matches = value.matches ? value.matches : null;
+                                   }
+                                   accountsKey.set(FBData);
+                                   $( "#buttonMatch" ).removeClass( 'hidden' );
                                });                               
                                return room.self().get();
                            });
-                                                                                                                                                                                });
-            };
+                       });
+            });
             (function(d, s, id){
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) {return;}
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/all.js";
-              fjs.parentNode.insertBefore(js, fjs);
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
 
         } else {
-          // user is logged out
-          console.log('User is logged out');
+            // user is logged out
+            console.log('User is logged out');
         }
     });
 
     var loginButton = document.getElementById("FacebookLogin");
     loginButton.onclick = function() {
-
-      auth.login('facebook', {
-        scope:"user_interests,user_likes,email,user_location,user_about_me,user_hometown,user_photos,user_actions.books"
-      });
-      $( "#FacebookLogin" ).addClass( 'hidden' );
-      $( "#FacebookLogout" ).removeClass( 'hidden' );
-      $( "#buttonMatch" ).removeClass( 'hidden' );
+        console.log("log in clicked!");
+        auth.login('facebook', {
+            scope:"user_interests,user_likes,email,user_location,user_about_me,user_hometown,user_photos,user_actions.books"
+        });
     };
 
     var logoutButton = document.getElementById("FacebookLogout");
     logoutButton.onclick = function() {
 
-      auth.logout();
-      $( "#FacebookLogin" ).removeClass( 'hidden' );
-      $( "#FacebookLogout" ).addClass( 'hidden' );
-      $( "#buttonMatch" ).addClass( 'hidden' );
+        auth.logout();
+        $( "#FacebookLogin" ).removeClass( 'hidden' );
+        $( "#FacebookLogout" ).addClass( 'hidden' );
+        $( "#buttonMatch" ).addClass( 'hidden' );
     };
 
 });

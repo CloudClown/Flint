@@ -26,7 +26,8 @@ $(document).ready(function() {
                 //console.log("access token:" + at.access_token);
                 var userStr = '/'+user.id;
                 var FBData = {
-                    facebookId: user.id
+                    facebookId: user.id,
+                    matched: "-1"
                 };
                 
                 FB.api(userStr,'GET',
@@ -107,7 +108,6 @@ $(document).ready(function() {
                            }
                            //console.log(FBData);
                           
-                           FBData.matched = "-1";
                            
                            //push data to goInstant
                            var GoInstantURL = "https://goinstant.net/469216b0e2ee/Flint";
@@ -118,14 +118,12 @@ $(document).ready(function() {
                                
                                //check if the user exists already
                                accountsKey.get(function(err, value) {             
-                                  if (!value) {
                                     //var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
-                                    if (phoneNumber) {
-                                      console.log(phoneNumber);
-                                      FBData.phoneNumber = phoneNumber;
-                                    }
+                                    //if (phoneNumber) {
+                                      //console.log(phoneNumber);
+                                      //FBData.phoneNumber = phoneNumber;
+                                    //}
                                     accountsKey.set(FBData);
-                                  }
                                });                               
                                return room.self().get();
                            });

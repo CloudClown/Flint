@@ -46,20 +46,24 @@ matchApp.controller('MatchCtrl', function($scope, $goKey, $firebase, $firebaseSi
         $scope.users.$$key.get(function (err, result) {
           var keys = Object.keys(result);
           keys.splice(keys.indexOf(user.id), 1);
+          console.log(keys);
           if(keys.length > 0) {
             $scope.mateId = keys[ keys.length * Math.random() << 0];
+            console.log($scope.mateId);
             var room = $scope.counter.$value + 1;
             $scope.counter.$set(room);
+            console.log(room);
 
             $scope.userAcc = $goKey('accounts/' + user.id + '/matches/' + room + '/mateId');
             $scope.userAcc.$sync();
-            $scope.mateMatched = $goKey('accounts/' + $scope.mateId + '/matched');
-            $scope.mateMatched.$sync();
-            $scope.mateAcc = $goKey('accounts/' + $scope.mateId + '/matches/' + room + '/mateId');
-            $scope.mateAcc.$sync();
             $scope.userAcc.$on("ready", function() {
+              $scope.mateAcc = $goKey('accounts/' + $scope.mateId + '/matches/' + room + '/mateId');
+              $scope.mateAcc.$sync();
               $scope.mateAcc.$on("ready", function() {
+                $scope.mateMatched = $goKey('accounts/' + $scope.mateId + '/matched');
+                $scope.mateMatched.$sync();
                 $scope.mateMatched.$on("ready", function() {
+                  console.log("ALL READY");
                   $scope.mateMatched.$set(room).then(function() {
                     $scope.userAcc.$set($scope.mateId).then(function() {
                       $scope.mateAcc.$set(user.id).then(function() {

@@ -118,7 +118,7 @@ $(document).ready(function() {
                                //check if the user exists already
                                accountsKey.get(function(err, value) {             
                                   if (!value) {
-                                    var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
+                                    //var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
                                     if (phoneNumber) {
                                       console.log(phoneNumber);
                                       FBData.phoneNumber = phoneNumber;

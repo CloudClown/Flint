@@ -119,7 +119,9 @@ var females = [
             var mate = room.key('accounts/' + accountsValue[arrayId[random]].facebookId);
             var mateMatchRoom = mate.key('matches/'+currCounter.toString()); 
             var mateMatchRoomNew = mateMatchRoom.key('mateId');
-            mateMatchRoomNew.set(currUserId);
+            mateMatchRoomNew.set(currUserId).then(function(result){
+              document.location.href = "/chat?room=" + currCounter;
+            });
             //var matchRoom = {};
             //matchRoom[currCounter.toString()] =  {"mateId": accountsValue[arrayId[random]].facebookId};
             //value.push(matchRoom);
@@ -128,7 +130,6 @@ var females = [
           break;
         }
       }
-      document.location.href = "/chat?room=" + currCounter;
       });
         });
       });
@@ -153,6 +154,7 @@ var females = [
             wait.innerHTML += ".";
         }, 1000);
         document.getElementById("buttonMatch").remove();
+        
         window.setTimeout(function() {match(dots);},6000);
         return false;
       });       

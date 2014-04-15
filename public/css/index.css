@@ -328,14 +328,15 @@ button {
   top: 2px;
   display: inline-block; }
   .rating .plus, .rating .minus {
+    border-radius: 6px;
     height: 15px;
     width: 18px;
     display: inline-block;
     cursor: pointer; }
   .rating .plus {
-    background-color: green; }
+    background-color: #B8E986; }
   .rating .minus {
-    background-color: red; }
+    background-color: #FF6A6A; }
 
 .plus {
   background-color: green; }
@@ -370,7 +371,7 @@ header {
   margin-left: auto;
   margin-right: auto;
   height: 30px;
-  background-color: #FFF1C9;
+  background-color: #000000;
   color: #232323;
   font-size: 30px;
   padding-top: 3px; }
@@ -379,24 +380,10 @@ header {
     display: table; }
   header:after {
     clear: both; }
-  header .titleContainer {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 31.76157%;
-    margin-left: 51.17883%; }
-    header .titleContainer:last-child {
-      margin-right: 0; }
   header .title {
-    text-align: center; }
-  header .logout {
-    font-size: 24px;
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 14.70196%; }
-    header .logout:last-child {
-      margin-right: 0; }
+    position: absolute;
+    left: 50%;
+    margin-top: -25px; }
 
 .interest {
   margin: auto;

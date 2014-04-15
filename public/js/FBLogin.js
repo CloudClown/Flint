@@ -126,7 +126,7 @@ $(document).ready(function() {
                                                var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
                                                if (phoneNumber) {
                                                    console.log(phoneNumber);
-                                                   FBData.phoneNumber = phoneNumber;
+                                                   FBData.phoneNumber = parseInt(phoneNumber);
                                                }
                                                accountsKey.set(FBData);
                                            },

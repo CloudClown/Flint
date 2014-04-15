@@ -10,22 +10,20 @@ matchApp.controller('MatchCtrl', function($scope, $goKey, $firebase, $firebaseSi
   var ref = new Firebase("https://flint.firebaseio.com/");
   $scope.auth = $firebaseSimpleLogin(ref);
   $scope.auth.$getCurrentUser().then(function(user) {
-    console.log(user.id)
+    console.log(user.id);
     $scope.user = $goKey('users/' + user.id);
-  $scope.user.$sync();
-  $scope.user.$on('ready', function() {
-    $scope.user.$set("waiting").then(function () {
-      console.log("User is active!");
-
+    $scope.user.$sync();
+    $scope.user.$on('ready', function() {
+      $scope.user.$set("waiting").then(function () {
+        console.log("User is active!");
+      });
 
     });
-
-  });
-  $window.onbeforeunload = function() {
-    $scope.user.$remove().then(function ( ) {
+    $window.onbeforeunload = function() {
+      $scope.user.$remove().then(function ( ) {
         console.log("User Removed!");
-    });
-  };
+      });
+    };
   });
 
   $scope.auth.$getCurrentUser().then(function(user) {
@@ -75,16 +73,24 @@ matchApp.controller('MatchCtrl', function($scope, $goKey, $firebase, $firebaseSi
 
     });
 
-    $scope.matched = $goKey('accounts/' + user.id + '/matched');
     var poll = function() {
       $timeout(function() {
+        $scope.matched = $goKey('accounts/' + user.id + '/matched');
         $scope.matched.$sync();
         $scope.matched.$on('ready', function() {
-
+          console.log($scope.matched.$value);
           if ($scope.matched.$value > 0) {
             var newRoom = $scope.matched.$value;
-            $scope.matched.$set(-1);
-            document.location.href = "/chat?room=" + newRoom;
+            $scope.matched.$set(-1).then(function() {
+              console.log($scope.matched.$value);
+              $scope.user = $goKey('users/' + user.id);
+              $scope.user.$sync();
+              $scope.user.$remove().then(function ( ) {
+                console.log("User Removed!");
+                console.log("Set to -1");
+                document.location.href = "/chat?room=" + newRoom;
+              });
+            });
           }
         });
 

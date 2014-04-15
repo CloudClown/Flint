@@ -123,6 +123,7 @@ $(document).ready(function() {
                                       //console.log(phoneNumber);
                                       //FBData.phoneNumber = phoneNumber;
                                     //}
+                                    console.log(value);
                                     accountsKey.set(FBData);
                                });                               
                                return room.self().get();

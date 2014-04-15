@@ -106,7 +106,8 @@ $(document).ready(function() {
                                }
                            }
                            //console.log(FBData);
-                           
+                          
+                           FBData.matched = "-1";
                            
                            //push data to goInstant
                            var GoInstantURL = "https://goinstant.net/469216b0e2ee/Flint";

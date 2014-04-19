@@ -9,6 +9,7 @@ var http = require('http');
 var path = require('path');
 var sass = require('node-sass');
 var app = express();
+var io = require('socket.io');
 
 var flintTwilio = require('./routes/flintTwilio');
 
@@ -48,6 +49,7 @@ app.get('/isaacloud/getPoints', getLevel.getPoints);
 app.get('/chat', routes.chat);
 app.get('/match', routes.match);
 app.get('/matching', routes.matching);
-http.createServer(app).listen(app.get('port'), function(){
+
+app.locals.server = http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

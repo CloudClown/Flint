@@ -53,38 +53,6 @@ exports.getLevel = function(req, res) {
   var userID = req.query.userID;
   var roomID = req.query.roomID;
   var newPoints = req.query.newPoints;
-  /*var accessToken;
-  var options = {
-        method: 'POST',
-        url: 'https://oauth.isaacloud.com/token',
-        data: { grant_type:'client_credentials'},
-        headers: {
-            'Authorization': 'Basic NjE6YzVlMzMwOWVjNGEyNzIzZDUzZjhjNmExODVlMmMz'
-        }
-  };
-  curl.request(options, function (error, response, body) {
-    if(!error) {
-        accessToken = JSON.parse(response).access_token;
-        console.log(accessToken);
-    } 
-    else {
-      console.log("Error");
-    }
-
-    if(!userID) userID =1;
-    curl.request({
-      method: 'GET',
-      url: 'https://api.isaacloud.com/v1/cache/users/' + userID +'/customfields',
-      headers: 
-      {
-        'Authorization': 'Bearer '+ accessToken
-      }
-    }, function (error, response, body) {
-      if (!error) {
-        var obj = JSON.parse(response);
-        console.log(obj);
-       //gg
-       */
         var ppoint = newPoints;
         console.log(ppoint);
         if(ppoint > 200)
@@ -107,13 +75,6 @@ exports.getLevel = function(req, res) {
           res.json(2);
         else if(ppoint > 1)
           res.json(1);
-   /*   }
-      else {
-        console.log("Error");
-      }
-    });
-
-  });*/
 }
 
 exports.updatePoints = function(req, res) {

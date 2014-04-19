@@ -3,10 +3,12 @@ extends layout
 block links
   link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700', rel='stylesheet', type='text/css')
   link(href="css/style.css" rel='stylesheet')
+  meta(name="viewport" content="initial-scale=1")
 
 block scripts
   script(src='js/view.js')
   script(src='js/todo.js')
+  script(src='js/count.js')
   div(id="fb-root")
     script(src='js/FBLogin.js')
   //script(src='js/index.js')
@@ -21,5 +23,4 @@ block content
   p#wait
     .parentDiv
 
-  
-  
+

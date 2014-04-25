@@ -11,6 +11,11 @@ exports.match = function(req, res) {
   res.render('match', { title: 'Flint User List' })
 };
 
+exports.matching = function(req, res) {
+  res.render('matching', { title: 'Flint User List' })
+};
+
+
 exports.chat = function(req, res){
   res.render('chat', { title: 'Flint Chat' });
 };

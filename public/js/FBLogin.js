@@ -2,27 +2,42 @@ $(document).ready(function() {
 
     var firebaseDataReference = new Firebase('https://flint.firebaseio.com/');
 
+    
+    $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+        console.log("init facebook!");
+        FB.init({
+            appId      : '1404685476473865',
+            status     : true,
+            xfbml      : true
+        });
+    });
+    
     var auth = new FirebaseSimpleLogin(firebaseDataReference, function(error, user) {
         if (error) {
             // an error occurred while attempting login
+            alert("Login Fails! Please Refresh the Page and Try Again!");
             console.log(error);
             console.log('error');
         } else if (user) {
+            $( "#FacebookLogin" ).addClass( 'hidden' );
+            $( "#FacebookLogout" ).removeClass( 'hidden' );
+            console.log("user logged in!!");
+
             // user authenticated with Firebase
             //console.log(user);
             //facebook api
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '1404685476473865',
-                    status     : true,
-                    xfbml      : true
-                });
-                
+            $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+                // FB.init({
+                //     appId      : '1404685476473865',
+                //     status     : true,
+                //     xfbml      : true
+                // });
                 var at = {access_token:user.accessToken};
                 //console.log("access token:" + at.access_token);
                 var userStr = '/'+user.id;
                 var FBData = {
-                    facebookId: user.id
+                    facebookId: user.id,
+                    matched: "-1"
                 };
                 
                 FB.api(userStr,'GET',
@@ -112,36 +127,32 @@ $(document).ready(function() {
                                var accountsKey = room.key('accounts/'+FBData.facebookId);
                                
                                //check if the user exists already
-                               accountsKey.get(function(err, value) {
-                                   
-                                   if(!value) {
-                                       //retrieving isaacloud ID
-                                       console.log("posting to isaacloud server...");
-                                       $.post(
-                                           "/isaacloud/init",
-                                           JSON.stringify({email: FBData.email}),
-                                           function(data, status, xhr) {
-                                               console.log("isaacloud ID retrieved!");
-                                               FBData.isaacloudID = data;
-                                               var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
-                                               if (phoneNumber) {
-                                                   console.log(phoneNumber);
-                                                   FBData.phoneNumber = parseInt(phoneNumber);
-                                               }
-                                               accountsKey.set(FBData);
-                                           },
-                                           "json"
-                                       );
-                                       //accountsKey.set(FBData);
-                                       
+                               accountsKey.get(function(err, value) {             
+                                   if (!value) {
+                                       console.log("new account added!");
+                                       //var phoneNumber = prompt("Your Phone Number is What They Eventually Want", "xxx-xxx-xxxx");
+                                       //if (phoneNumber) {
+                                       //console.log(phoneNumber);
+                                       //FBData.phoneNumber = phoneNumber;
+                                       //}
                                    }
-                               });
-                               
-                               
+                                   else {
+                                       //update FB info, keep the match info
+                                       console.log("User exists! Update Facebook Info...");
+                                       if (value.matches) {
+                                           FBData.matches = value.matches;
+                                       }
+                                       if (value.matched) {
+                                           FBData.matched = value.matched;  
+                                       }
+                                   }
+                                   accountsKey.set(FBData);
+                                   $( "#buttonMatch" ).removeClass( 'hidden' );
+                               });                               
                                return room.self().get();
                            });
                        });
-            };
+            });
             (function(d, s, id){
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) {return;}
@@ -149,16 +160,16 @@ $(document).ready(function() {
                 js.src = "//connect.facebook.net/en_US/all.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-            
+
         } else {
             // user is logged out
             console.log('User is logged out');
         }
     });
-    
+
     var loginButton = document.getElementById("FacebookLogin");
     loginButton.onclick = function() {
-
+        console.log("log in clicked!");
         auth.login('facebook', {
             scope:"user_interests,user_likes,email,user_location,user_about_me,user_hometown,user_photos,user_actions.books"
         });
@@ -166,7 +177,11 @@ $(document).ready(function() {
 
     var logoutButton = document.getElementById("FacebookLogout");
     logoutButton.onclick = function() {
+
         auth.logout();
+        $( "#FacebookLogin" ).removeClass( 'hidden' );
+        $( "#FacebookLogout" ).addClass( 'hidden' );
+        $( "#buttonMatch" ).addClass( 'hidden' );
     };
 
 });

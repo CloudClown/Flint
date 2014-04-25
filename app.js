@@ -5,7 +5,6 @@
 var express = require('express');
 var routes = require('./routes');
 var getLevel = require('./routes/getLevel');
-var initIsaacloud = require('./routes/initIsaacloud');
 var http = require('http');
 var path = require('path');
 var sass = require('node-sass');
@@ -35,7 +34,6 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, 'public')));
-
 // development only
 if ('development' === app.get('env')) {
     app.use(express.errorHandler());
@@ -47,12 +45,9 @@ app.get('/isaacloud/getLevel', getLevel.getLevel);
 app.put('/isaacloud/updatePoints', getLevel.updatePoints);
 app.get('/isaacloud/newRoom', getLevel.newRoom);
 app.get('/isaacloud/getPoints', getLevel.getPoints);
-app.post('/isaacloud/init', initIsaacloud.initIsaacloud);
-app.get('/match', routes.match);
 app.get('/chat', routes.chat);
-
-app.post('/twilio', flintTwilio.flintTwilio);
-
+app.get('/match', routes.match);
+app.get('/matching', routes.matching);
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

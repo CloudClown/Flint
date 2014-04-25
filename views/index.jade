@@ -9,13 +9,14 @@ block scripts
   script(src='js/todo.js')
   div(id="fb-root")
     script(src='js/FBLogin.js')
-  script(src='js/index.js')
+  //script(src='js/index.js')
 
 block content
-  button#FacebookLogin(data-action="bae") Facebook Login
-  button#FacebookLogout(data-action="bae") Facebook Logout
+  button#FacebookLogin.fb(data-action="bae") Facebook Login
+  button#FacebookLogout.hidden.fb(data-action="bae") Facebook Logout
 
-  a#buttonMatch.matchButton(href="#") Match
+  .match
+    a#buttonMatch.matchButton.hidden(href="matching") Match
   br
   p#wait
     .parentDiv
